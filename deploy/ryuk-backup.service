@@ -1,0 +1,6 @@
+[Unit]
+Description=Ryuk: copia do ranking (SQLite) para /var/backups/pg
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'TS=$(date +%%Y%%m%%d-%%H%%M%%S); F=/var/backups/pg/ryuk-ranking-$TS.db; sqlite3 /var/lib/ryuk/ranking.db ".backup $F" && chmod 640 "$F" && find /var/backups/pg -name "ryuk-ranking-*.db" -mtime +14 -delete'

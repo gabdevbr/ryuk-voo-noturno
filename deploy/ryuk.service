@@ -1,0 +1,24 @@
+[Unit]
+Description=Ryuk: Voo Noturno - jogo e ranking (ryuk.gab.dev.br)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=deploy
+Group=deploy
+WorkingDirectory=/opt/ryuk/current
+Environment=RYUK_PORT=8797
+Environment=RYUK_DB=/var/lib/ryuk/ranking.db
+Environment=RYUK_WEB=/opt/ryuk/current/web
+ExecStart=/usr/bin/python3 api/server.py
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/ryuk
+
+[Install]
+WantedBy=multi-user.target
